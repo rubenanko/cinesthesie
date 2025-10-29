@@ -2,21 +2,30 @@ import './App.css'
 import Player from './components/Player'
 import { useState } from 'react';
 
-function App() {
+function App() 
+{
   const [scrollXPosition, setScrollXPosition] = useState(0);
   const [scrollYPosition, setScrollYPosition] = useState(0);
 
   const handleScroll = (event) => {
-      const newScrollXPosition = scrollXPosition + event.deltaX;
-      const newScrollYPosition = scrollYPosition + event.deltaY;
+      const newScrollXPosition = Math.max(0,scrollXPosition + event.deltaX);
+      const newScrollYPosition = Math.max(0,scrollYPosition + event.deltaY);
       setScrollXPosition(newScrollXPosition);
       setScrollYPosition(newScrollYPosition);
   };
 
-  return (
-    <div onWheel={() => {handleScroll(event);console.log(scrollYPosition)}}>
-      <Player src="src/videos/shesalady.mp4"/>
+  const scenes = ["src/videos/shesalady.mp4","src/videos/deltalady.mp4"]
 
+  const sceneRange = 10000;
+  let index = Math.round(scrollYPosition/sceneRange)
+  let blur = Math.abs((index*sceneRange - scrollYPosition)/100)
+  let volume = 1 - blur/50
+
+  return (
+    <div onWheel={() => {handleScroll(event);console.log(blur)}}>
+      <Player src={scenes[index]}
+              blur={blur}
+              volume={volume}/>
     </div>
   )
 }
