@@ -1,12 +1,13 @@
 import ReactPlayer from 'react-player'
 import { useState } from 'react'
 
-function Player({src,blur,volume})
+function Player({src,blur,volume,preambule})
 {
     const [play,setPlay] = useState(false);
 
     return (
         <div className='absolute w-full h-full top-0 left-0'>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-5xl z-10" style={{blur:`blur(${blur}px)`,opacity:blur/90}}>{preambule}</div>
             <div className='absolute top-0 left-0 w-full h-full' style={{backdropFilter:`blur(${blur}px)`}}></div>
             <div className='absolute top-0 left-0 w-full h-full bg-black' style={{opacity:blur/100}}></div>
             <ReactPlayer
