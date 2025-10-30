@@ -1,4 +1,42 @@
 [
-    "/scenes/videos/shesalady.mp4",
-    "/scenes/videos/deltalady.mp4"
+    [    
+        {
+            "video":"/scenes/videos/shesalady.mp4",
+            "title":"She's A Lady", 
+            "Director": "Tom Jones & Paul Anka", 
+            "Year": 1974, 
+            "preambule": "c'est une musique qu'elle est toujours bien à écouter",
+            "textColor": "ff0000",
+            "font": "Momo Trust Display"
+        },
+        {
+            "video":"/scenes/videos/deltalady.mp4",
+            "title":"Delta Lady",
+            "Director": "Tom Jones & Joe Cocker", 
+            "Year": 1970, 
+            "preambule": "C'est une musique qu'elle est pas mal",
+            "textColor": "ff0000",
+            "font": "Momo Trust Display"
+        }
+    ],
+    [    
+        {
+            "video":"/scenes/videos/treatherright.mp4",
+            "title":"Treat Her Right",
+            "Director": "Tom Jones", 
+            "Year": 1969, 
+            "preambule": "Observez cette dance",
+            "textColor": "ff0000",
+            "font": "Momo Trust Display"
+        },
+        {
+            "video":"/scenes/videos/shesalady.mp4",
+            "title":"She's A Lady", 
+            "Director": "Tom Jones", 
+            "Year": 1970, 
+            "preambule": "c'est une musique qu'elle est bien à écouter",
+            "textColor": "ff0000",
+            "font": "Momo Trust Display"
+        }
+    ]
 ]
