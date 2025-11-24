@@ -1,33 +1,24 @@
 import Player from '../components/Player';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import scenes from "../scenes.json"
 
-function Explorer() 
+function Explorer({indexX,setIndexX,indexY,setIndexY,changeNavigationDirection,isNavigationVertical,setIsNavigationVertical}) 
 {
   const blurValue = 50;
   const STATE = {BLUR1:0,VIDEO:1,BLUR2:2,TRANSITION:3};
 
-  const [sceneState,setSceneState] = useState(STATE.VIDEO);
+  const [sceneState,setSceneState] = useState(STATE.TRANSITION);
+  useEffect(() =>{
+    setTimeout(()=>{setSceneState(STATE.BLUR1)},500)
+  }, [])
+
   const [coolDown,setCoolDown] = useState(false);
   const [directionX,setDirectionX] = useState(1);
   const [directionY,setDirectionY] = useState(1);
-  const [showTitle,setShowTitle] = useState(false);
-  const [indexX,setIndexX] = useState(0);
-  const [indexY,setIndexY] = useState(0);
-  const [isNavigationVertical,setIsNavigationVertical] = useState(true);
-  const [changeNavigationDirection,setChangeNavigationDirection] = useState(false);
+  const [showTitle,setShowTitle] = useState(true);
 
   const handleNavigationBarClick = () => {
     setIsNavigationVertical(!isNavigationVertical)
-  }
-
-  const handleKeyDown = (event) => {
-    if(event.code == "Space" && sceneState == STATE.VIDEO)
-    {
-      setChangeNavigationDirection(true)
-      setTimeout(()=>setIsNavigationVertical(!isNavigationVertical),500)
-      setTimeout(()=>setChangeNavigationDirection(false),1500)
-    }
   }
 
   // callback function on scroll
@@ -121,7 +112,7 @@ function Explorer()
     
 
   return (
-    <div onWheel={() => {handleScroll(event);}} onKeyDown={()=>{handleKeyDown(event)}} tabIndex="0">
+    <div onWheel={() => {handleScroll(event);}}>
       <div className={navigationBarStyle} onClick={handleNavigationBarClick}>
         <svg width="150px" height="150px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 22.981l4.12-11.49L12 1.149 7.88 11.49zM9.125 12h5.75L12 20.019z"/><path fill="none" d="M0 0h24v24H0z"/></svg>
       </div>

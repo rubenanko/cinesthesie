@@ -2,6 +2,7 @@
     [    
         {
             "video":"/scenes/videos/shesalady.mp4",
+            "thumbnail": "/scenes/images/shesalady.jpg",
             "title":"She's A Lady", 
             "Director": "Tom Jones & Paul Anka", 
             "Year": 1974, 
@@ -11,6 +12,7 @@
         },
         {
             "video":"/scenes/videos/deltalady.mp4",
+            "thumbnail": "/scenes/images/deltalady.jpg",
             "title":"Delta Lady",
             "Director": "Tom Jones & Joe Cocker", 
             "Year": 1970, 
@@ -23,6 +25,7 @@
         {
             "video":"/scenes/videos/treatherright.mp4",
             "title":"Treat Her Right",
+            "thumbnail": "/scenes/images/treatherright.jpg",
             "Director": "Tom Jones", 
             "Year": 1969, 
             "preambule": "Observez cette dance",
@@ -31,6 +34,7 @@
         },
         {
             "video":"/scenes/videos/shesalady.mp4",
+            "thumbnail": "/scenes/images/shesalady.jpg",
             "title":"She's A Lady", 
             "Director": "Tom Jones", 
             "Year": 1970, 
