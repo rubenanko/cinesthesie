@@ -5,75 +5,83 @@ import scenes from "./scenes.json"
 
 function App() 
 {
-  const sceneRange = 20000;
-  const blurRange = sceneRange/100
+  const blurValue = 50;
+  const STATE = {BLUR1:0,VIDEO:1,BLUR2:2,TRANSITION:3};
 
-  const [scrollXPosition, setScrollXPosition] = useState(0);
-  const [scrollYPosition, setScrollYPosition] = useState(0);
-  const [indexX, setIndexX] = useState(0);
-  const [indexY, setIndexY] = useState(0);
-  const [directionX, setDirectionX] = useState(0);
-  const [directionY, setDirectionY] = useState(0);
+  const [sceneState,setSceneState] = useState(STATE.VIDEO);
+  const [coolDown,setCoolDown] = useState(false);
+  const [directionX,setDirectionX] = useState(1);
+  const [directionY,setDirectionY] = useState(1);
+  const [showTitle,setShowTitle] = useState(false);
+  const [indexX,setIndexX] = useState(0);
+  const [indexY,setIndexY] = useState(0);
 
   const handleScroll = (event) => {
-      const newScrollXPosition = Math.min(Math.max(0,scrollXPosition + event.deltaX),(scenes.length-1)*sceneRange*5/4 - 1);
-      const newScrollYPosition = Math.min(Math.max(0,scrollYPosition + event.deltaY),(scenes[indexX].length-1)*sceneRange*5/4 - 1);
-      setScrollXPosition(newScrollXPosition);
-      setScrollYPosition(newScrollYPosition);
+    if(!coolDown)
+      if(event.deltaY != 0)
+      {
+        let nextState = (sceneState + Math.sign(event.deltaY));
+        if (nextState > 3)
+          nextState = 0
+        else
+          if (nextState < 0)
+            nextState = 3
+          
+
+        setSceneState(nextState);
+
+        if(Math.sign(event.deltaY) == directionY)
+          setShowTitle(false)
+        else
+          setShowTitle(true)
+
+        if(nextState == STATE.TRANSITION)
+        {
+          setTimeout(() => {
+            let newIndex = indexY+Math.sign(event.deltaY);
+            if(newIndex >= scenes[0].length)
+              newIndex = 0;
+            if(newIndex < 0)
+              newIndex = scenes[0].length-1;
+            setIndexY(newIndex)
+            },1000)
+          setTimeout(() => {setSceneState(Math.abs((nextState+ Math.sign(event.deltaY)) % 4))},1000);
+          setDirectionY(Math.sign(event.deltaY))
+          setShowTitle(true);
+        }
+
+        
+        setCoolDown(true);
+        setTimeout(() => {setCoolDown(false)},500)
+      }
   };
-
-  // save the amount of re renders
-
-  let tmpIndexY = Math.round(scrollYPosition/sceneRange)
-  let tmpIndexX = Math.round(scrollXPosition/sceneRange)
-
-  // update the index, and coming direction
-  if(tmpIndexX != indexX)
-  {
-    setIndexX(tmpIndexX)
-    setDirectionX(tmpIndexX*sceneRange - scrollXPosition)
-    setDirectionY(0)
-  }
-
-  if(tmpIndexY != indexY)
-  {
-    setIndexY(tmpIndexY)
-    setDirectionY(tmpIndexY*sceneRange - scrollYPosition)
-    setDirectionX(0)
-  }
-
-
-  // recenter the scrolling on the current main axis
-  if((indexX*sceneRange != scrollXPosition) && Math.abs(indexX*sceneRange - scrollXPosition)/Math.abs(indexY*sceneRange - scrollYPosition) < 0.5)
-    setScrollXPosition(indexX*sceneRange)
-
-  else
-  {
-    if((indexY*sceneRange != scrollYPosition) && Math.abs(indexY*sceneRange - scrollYPosition)/Math.abs(indexX*sceneRange - scrollXPosition) < 0.5)
-      setScrollYPosition(indexY*sceneRange)
-  }
-
-  // calculate blur values
-  let distance = Math.sqrt(Math.pow(indexY*sceneRange - scrollYPosition,2) + Math.pow(indexX*sceneRange - scrollXPosition,2))
-  let blur = distance/blurRange
-  let volume = Math.exp(-blur/20)
 
   // set up the text
   let text = null
-  if((indexY*sceneRange - scrollYPosition)*directionY > 0 || (indexX*sceneRange-scrollXPosition)*directionX > 0)
-    text = <>
-              <h2 className="text-9xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}>{scenes[indexX][indexY].title}</h2>
-              <p className="text-5xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}>{scenes[indexX][indexY].Director}</p>
-              <p className="text-3xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}>{scenes[indexX][indexY].Year}</p>
-          </>
+  if(sceneState == STATE.BLUR1 || sceneState == STATE.BLUR2)
+    if(showTitle)
+      text = <>
+                <h2 className="text-9xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}>{scenes[indexX][indexY].title}</h2>
+                <p className="text-5xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}>{scenes[indexX][indexY].Director}</p>
+                <p className="text-3xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}>{scenes[indexX][indexY].Year}</p>
+            </>
+    else
+        text = <p className="text-5xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}>{scenes[indexX][indexY].preambule}</p>
+  
+  let blur = blurValue;
+
+  if(sceneState == STATE.VIDEO)
+    blur = 0
   else
-    text = <p className="text-5xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}>{scenes[indexX][indexY].preambule}</p>
+    if(sceneState == STATE.TRANSITION)
+      blur = 100
+
 
   return (
-    <div onWheel={() => {handleScroll(event)}}>
+    <div onWheel={() => {handleScroll(event);}}>
       <Player src={scenes[indexX][indexY].video}
               blur={blur}
-              volume={volume}
+              volume={0}
               text={text}/>
     </div>
   )
