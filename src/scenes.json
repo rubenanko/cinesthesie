@@ -33,12 +33,12 @@
             "font": "Momo Trust Display"
         },
         {
-            "video":"/scenes/videos/shesalady.mp4",
-            "thumbnail": "/scenes/images/shesalady.jpg",
-            "title":"She's A Lady", 
-            "Director": "Tom Jones", 
+            "video":"/scenes/videos/patches.mp4",
+            "thumbnail": "/scenes/images/patches.jpg",
+            "title":"Patches", 
+            "Director": "Tom Jones & Big John Sullivan", 
             "Year": 1970, 
-            "preambule": "c'est une musique qu'elle est bien à écouter",
+            "preambule": "snif",
             "textColor": "ff0000",
             "font": "Momo Trust Display"
         }

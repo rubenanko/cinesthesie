@@ -11,14 +11,14 @@ function Menu({setIsExploring,setIndexX,setIndexY})
         {
             cells.push(
             <div>
-                    <img onClick={()=>{setIsExploring(true);setIndexX(x);setIndexY(y)}} className="h-50 w-50 object-cover rounded-lg transition-all duration-500 hover:scale-110 hover:cursor-pointer" src={scenes[x][y].thumbnail} alt=""/>
+                    <img onClick={()=>{setIsExploring(true);setIndexX(x);setIndexY(y)}} className="h-50 w-50 object-cover rounded-sm transition-all duration-2000 hover:scale-105 hover:cursor-pointer" src={scenes[x][y].thumbnail} alt=""/>
             </div>)
         }
     }              
 
     return (
         <div>
-            <div class="grid grid-cols-2 md:grid-cols-2 gap-4 m-25">
+            <div class="grid grid-cols-2 md:grid-cols-2 gap-2 m-25">
                 {cells}
             </div>
         </div>
