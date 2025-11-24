@@ -15,9 +15,19 @@ function Explorer()
   const [indexX,setIndexX] = useState(0);
   const [indexY,setIndexY] = useState(0);
   const [isNavigationVertical,setIsNavigationVertical] = useState(true);
+  const [changeNavigationDirection,setChangeNavigationDirection] = useState(false);
 
   const handleNavigationBarClick = () => {
     setIsNavigationVertical(!isNavigationVertical)
+  }
+
+  const handleKeyDown = (event) => {
+    if(event.code == "Space" && sceneState == STATE.VIDEO)
+    {
+      setChangeNavigationDirection(true)
+      setTimeout(()=>setIsNavigationVertical(!isNavigationVertical),500)
+      setTimeout(()=>setChangeNavigationDirection(false),1500)
+    }
   }
 
   // callback function on scroll
@@ -94,26 +104,30 @@ function Explorer()
 
   let navigationBarStyle = null
   if(sceneState == STATE.VIDEO)
-    if(isNavigationVertical)
-      navigationBarStyle = 'rotate-90 absolute z-10 left-[50px] bottom-[50px] text-red-500 opacity-0 hover:opacity-255 transition-all duration-300'
+    if(changeNavigationDirection)
+      if(isNavigationVertical)
+        navigationBarStyle = 'absolute z-10 right-[50px] bottom-[50px] text-red-500 opacity-255 transition-all duration-300'
+      else
+        navigationBarStyle = 'rotate-90 absolute z-10 right-[50px] bottom-[50px] text-red-500 opacity-255 transition-all duration-300'      
     else
-      navigationBarStyle = 'absolute z-10 left-[50px] bottom-[50px] text-red-500 opacity-0 hover:opacity-255 transition-all duration-300'
+      if(isNavigationVertical)
+        navigationBarStyle = 'absolute z-10 right-[50px] bottom-[50px] text-red-500 opacity-0 hover:opacity-255 transition-all duration-300'
+      else
+        navigationBarStyle = 'rotate-90 absolute z-10 right-[50px] bottom-[50px] text-red-500 opacity-0 hover:opacity-255 transition-all duration-300'
   else
-    navigationBarStyle = 'hidden absolute z-10 left-[50px] bottom-[50px] text-red-500 opacity-0 hover:opacity-255 transition-all duration-300'
+    navigationBarStyle = 'hidden absolute z-10 right-[50px] bottom-[50px] text-red-500 opacity-0 hover:opacity-255 transition-all duration-300'
 
+
+    
 
   return (
-    <div onWheel={() => {handleScroll(event);}}>
+    <div onWheel={() => {handleScroll(event);}} onKeyDown={()=>{handleKeyDown(event)}} tabIndex="0">
       <div className={navigationBarStyle} onClick={handleNavigationBarClick}>
-        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-          width="200px" height="200px" viewBox="0 0 290.658 290.658"
-          xml:space="preserve">
-          <g><g><rect y="139.474" style={{"fill":"currentColor"}} width="290.658" height="11.711"/></g></g>
-        </svg>
+        <svg width="150px" height="150px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 22.981l4.12-11.49L12 1.149 7.88 11.49zM9.125 12h5.75L12 20.019z"/><path fill="none" d="M0 0h24v24H0z"/></svg>
       </div>
       <Player src={scenes[indexX][indexY].video}
               blur={blur}
-              volume={0}
+              volume={0.30}
               text={text}/>
     </div>
   )

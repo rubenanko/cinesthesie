@@ -7,7 +7,7 @@ function App()
 {
   const [isExploring,setIsExploring] = useState(false);
 
-  let returned = isExploring ? <Explorer/> : <Welcome/>
+  let returned = !isExploring ? <Explorer/> : <Welcome/>
 
     return (
       <>
