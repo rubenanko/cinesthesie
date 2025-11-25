@@ -1,7 +1,7 @@
 import './App.css';
 import Explorer from "./pages/Explorer"
-import { useState } from 'react';
-import Menu from './pages/Menu';
+import { useEffect, useState } from 'react';
+import Menu from './components/Menu';
 
 function App() 
 {
@@ -9,8 +9,45 @@ function App()
   const [showMenuSection,setShowMenuSection] = useState(true);
   const [isNavigationVertical,setIsNavigationVertical] = useState(true);
   const [changeNavigationDirection,setChangeNavigationDirection] = useState(false);
-  const [indexX,setIndexX] = useState(0);
-  const [indexY,setIndexY] = useState(0);
+  const [indexX,_setIndexX] = useState(0);
+  const [indexY,_setIndexY] = useState(0);
+  const [progression,setProgression] = useState(
+                                        window.localStorage.getItem("progression") ? 
+                                        JSON.parse(
+                                          atob(window.localStorage.getItem("progression"))
+                                        ) : []);
+
+  const setIndexX = (index) => {
+    _setIndexX(index)
+    if(!progression.filter(element=>{return (element[0] == index) && (element[1] == indexY)}).length)
+      {
+      let newProgression = [...progression,[index,indexY]]
+      setProgression(newProgression)
+      window.localStorage.setItem("progression",btoa(JSON.stringify(newProgression)))
+    }
+  }
+
+  
+  const setIndexY = (index) => {
+    _setIndexY(index)
+    if(!progression.filter(element=>{return (element[0] == indexX) && (element[1] == index)}).length)
+    {
+      let newProgression = [...progression,[indexX,index]]
+      setProgression(newProgression)
+      window.localStorage.setItem("progression",btoa(JSON.stringify(newProgression)))
+    }
+  }
+
+  const setIndexXY = (x,y) => {
+      _setIndexX(x)
+      _setIndexY(y)
+      if(!progression.filter(element=>{return (element[0] == x) && (element[1] == y)}).length)
+      {
+        let newProgression = [...progression,[x,y]]
+        setProgression(newProgression)
+        window.localStorage.setItem("progression",btoa(JSON.stringify(newProgression)))
+      }
+  }
 
   const handleKeyDown = (event) => {
 
@@ -42,10 +79,15 @@ function App()
       <div className="transition-all duration-500" style={{"opacity":showMenuSection ? "1" : "0"}}>
         <Menu
         setIsExploring={setIsExploring}
-        setIndexX={setIndexX}
-        setIndexY={setIndexY}/>
+        setIndexXY={setIndexXY}
+        progression={progression}/>
         <div className="m-25">
-          <div type="button" onClick={()=>{setShowMenuSection(false);setTimeout(()=>{setIsExploring(true)},500)}} class="cursor-pointer text-2xl text-red-400 hover:text-black ring-1 ring-red-400 hover:bg-red-400 focus:bg-red-300 focus:ring-red-300 focus:text-black focus:shadow-lg focus:shadow-red-300/100 focus:outline-none hover:shadow-lg hover:shadow-red-500/50 font-medium rounded-lg px-8 py-5 text-center leading-5 transition-all duration-500">
+          <div onClick={()=>{setShowMenuSection(false);setTimeout(()=>{
+              if(progression.length)
+                setIndexXY(...progression[progression.length-1])
+              else
+                setIndexXY(0,0)
+              setIsExploring(true)},500)}} class="cursor-pointer text-2xl text-red-400 hover:text-black ring-1 ring-red-400 hover:bg-red-400 focus:bg-red-300 focus:ring-red-300 focus:text-black focus:shadow-lg focus:shadow-red-300/100 focus:outline-none hover:shadow-lg hover:shadow-red-500/50 font-medium rounded-lg px-8 py-5 text-center leading-5 transition-all duration-500">
             Zou !
           </div>  
         </div>

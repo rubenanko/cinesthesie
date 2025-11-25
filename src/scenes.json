@@ -19,6 +19,68 @@
             "preambule": "C'est une musique qu'elle est pas mal",
             "textColor": "ff0000",
             "font": "Momo Trust Display"
+        },
+        {
+            "video":"/scenes/videos/treatherright.mp4",
+            "title":"Treat Her Right",
+            "thumbnail": "/scenes/images/treatherright.jpg",
+            "Director": "Tom Jones", 
+            "Year": 1969, 
+            "preambule": "Observez cette dance",
+            "textColor": "ff0000",
+            "font": "Momo Trust Display"
+        },
+        {
+            "video":"/scenes/videos/patches.mp4",
+            "thumbnail": "/scenes/images/patches.jpg",
+            "title":"Patches", 
+            "Director": "Tom Jones & Big John Sullivan", 
+            "Year": 1970, 
+            "preambule": "snif",
+            "textColor": "ff0000",
+            "font": "Momo Trust Display"
+        }
+    ],
+    [
+        {
+            "video":"/scenes/videos/patches.mp4",
+            "thumbnail": "/scenes/images/patches.jpg",
+            "title":"Patches", 
+            "Director": "Tom Jones & Big John Sullivan", 
+            "Year": 1970, 
+            "preambule": "snif",
+            "textColor": "ff0000",
+            "font": "Momo Trust Display"
+        },
+        {
+            "video":"/scenes/videos/shesalady.mp4",
+            "thumbnail": "/scenes/images/shesalady.jpg",
+            "title":"She's A Lady", 
+            "Director": "Tom Jones & Paul Anka", 
+            "Year": 1974, 
+            "preambule": "c'est une musique qu'elle est toujours bien à écouter",
+            "textColor": "ff0000",
+            "font": "Momo Trust Display"
+        },
+        {
+            "video":"/scenes/videos/deltalady.mp4",
+            "thumbnail": "/scenes/images/deltalady.jpg",
+            "title":"Delta Lady",
+            "Director": "Tom Jones & Joe Cocker", 
+            "Year": 1970, 
+            "preambule": "C'est une musique qu'elle est pas mal",
+            "textColor": "ff0000",
+            "font": "Momo Trust Display"
+        },
+        {
+            "video":"/scenes/videos/treatherright.mp4",
+            "title":"Treat Her Right",
+            "thumbnail": "/scenes/images/treatherright.jpg",
+            "Director": "Tom Jones", 
+            "Year": 1969, 
+            "preambule": "Observez cette dance",
+            "textColor": "ff0000",
+            "font": "Momo Trust Display"
         }
     ],
     [    
@@ -39,6 +101,68 @@
             "Director": "Tom Jones & Big John Sullivan", 
             "Year": 1970, 
             "preambule": "snif",
+            "textColor": "ff0000",
+            "font": "Momo Trust Display"
+        },
+        {
+            "video":"/scenes/videos/shesalady.mp4",
+            "thumbnail": "/scenes/images/shesalady.jpg",
+            "title":"She's A Lady", 
+            "Director": "Tom Jones & Paul Anka", 
+            "Year": 1974, 
+            "preambule": "c'est une musique qu'elle est toujours bien à écouter",
+            "textColor": "ff0000",
+            "font": "Momo Trust Display"
+        },
+        {
+            "video":"/scenes/videos/deltalady.mp4",
+            "thumbnail": "/scenes/images/deltalady.jpg",
+            "title":"Delta Lady",
+            "Director": "Tom Jones & Joe Cocker", 
+            "Year": 1970, 
+            "preambule": "C'est une musique qu'elle est pas mal",
+            "textColor": "ff0000",
+            "font": "Momo Trust Display"
+        }
+    ],
+    [    
+        {
+            "video":"/scenes/videos/treatherright.mp4",
+            "title":"Treat Her Right",
+            "thumbnail": "/scenes/images/treatherright.jpg",
+            "Director": "Tom Jones", 
+            "Year": 1969, 
+            "preambule": "Observez cette dance",
+            "textColor": "ff0000",
+            "font": "Momo Trust Display"
+        },
+        {
+            "video":"/scenes/videos/patches.mp4",
+            "thumbnail": "/scenes/images/patches.jpg",
+            "title":"Patches", 
+            "Director": "Tom Jones & Big John Sullivan", 
+            "Year": 1970, 
+            "preambule": "snif",
+            "textColor": "ff0000",
+            "font": "Momo Trust Display"
+        },
+        {
+            "video":"/scenes/videos/shesalady.mp4",
+            "thumbnail": "/scenes/images/shesalady.jpg",
+            "title":"She's A Lady", 
+            "Director": "Tom Jones & Paul Anka", 
+            "Year": 1974, 
+            "preambule": "c'est une musique qu'elle est toujours bien à écouter",
+            "textColor": "ff0000",
+            "font": "Momo Trust Display"
+        },
+        {
+            "video":"/scenes/videos/deltalady.mp4",
+            "thumbnail": "/scenes/images/deltalady.jpg",
+            "title":"Delta Lady",
+            "Director": "Tom Jones & Joe Cocker", 
+            "Year": 1970, 
+            "preambule": "C'est une musique qu'elle est pas mal",
             "textColor": "ff0000",
             "font": "Momo Trust Display"
         }
