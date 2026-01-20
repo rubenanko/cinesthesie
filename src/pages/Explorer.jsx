@@ -1,6 +1,7 @@
 import Player from '../components/Player';
 import { useState,useEffect } from 'react';
 import scenes from "../scenes.json"
+import FormatedText from '../components/FormatedText';
 
 function Explorer({indexX,setIndexX,indexY,setIndexY,changeNavigationDirection,isNavigationVertical,setIsNavigationVertical}) 
 {
@@ -72,12 +73,12 @@ function Explorer({indexX,setIndexX,indexY,setIndexY,changeNavigationDirection,i
   if(sceneState == STATE.BLUR1 || sceneState == STATE.BLUR2)
     if(showTitle)
       text = <>
-                <h2 className="text-9xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}>{scenes[indexX][indexY].title}</h2>
-                <p className="text-5xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}>{scenes[indexX][indexY].Director}</p>
+                <h2 className="text-9xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}><FormatedText text={scenes[indexX][indexY].title}/></h2>
+                <p className="text-5xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}><FormatedText text={scenes[indexX][indexY].Director}/></p>
                 <p className="text-3xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}>{scenes[indexX][indexY].Year}</p>
             </>
     else
-        text = <p className="text-5xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}>{scenes[indexX][indexY].preambule}</p>
+        text = <p className="text-5xl text-justify" style={{lineHeight: "1.4em",color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}><FormatedText text={scenes[indexX][indexY].preambule}/></p>
   
     
     // handle blur

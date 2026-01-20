@@ -24,7 +24,7 @@ function Menu({setIsExploring,setIndexXY,progression})
 
     return (
         <div>
-            <div class="grid grid-cols-4 gap-2 m-25">
+            <div class="grid gap-2 m-25" style={{"gridTemplateColumns":`repeat(${scenes.length}, minmax(0, 1fr))`}}>
                 {cells}
             </div>
         </div>
