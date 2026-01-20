@@ -1,19 +1,21 @@
 import Player from '../components/Player';
 import { useState,useEffect } from 'react';
-import scenes from "../scenes.json"
 import FormatedText from '../components/FormatedText';
 
-function Explorer({indexX,setIndexX,indexY,setIndexY,changeNavigationDirection,isNavigationVertical,setIsNavigationVertical}) 
+function Explorer({scenes,indexX,setIndexX,indexY,setIndexY,changeNavigationDirection,isNavigationVertical,setIsNavigationVertical}) 
 {
   const blurValue = 50;
   const STATE = {BLUR1:0,VIDEO:1,BLUR2:2,TRANSITION:3};
 
   const [sceneState,setSceneState] = useState(STATE.TRANSITION);
+  const [coolDown,setCoolDown] = useState(false);
+
   useEffect(() =>{
-    setTimeout(()=>{setSceneState(STATE.BLUR1)},500)
+    setCoolDown(true);
+    setTimeout(()=>setSceneState(STATE.BLUR1),500)
+    setTimeout(()=>setCoolDown(false),1000)
   }, [])
 
-  const [coolDown,setCoolDown] = useState(false);
   const [directionX,setDirectionX] = useState(1);
   const [directionY,setDirectionY] = useState(1);
   const [showTitle,setShowTitle] = useState(true);
@@ -46,8 +48,12 @@ function Explorer({indexX,setIndexX,indexY,setIndexY,changeNavigationDirection,i
         else
           setShowTitle(true)
 
+        // cooldown avant de pouvoir changer de state
+        setCoolDown(true);
+
         if(nextState == STATE.TRANSITION)
         {
+          // timeout de la barre verticale
           setTimeout(() => {
             let newIndex = index+Math.sign(event.deltaY);
             let length = isNavigationVertical ? scenes[indexX].length : scenes.length
@@ -57,14 +63,17 @@ function Explorer({indexX,setIndexX,indexY,setIndexY,changeNavigationDirection,i
               newIndex = scenes[0].length-1;
             setIndex(newIndex)
             },1000)
+
           setTimeout(() => {setSceneState(Math.abs((nextState+ Math.sign(event.deltaY)) % 4))},1000);
           setDirection(Math.sign(event.deltaY))
           setShowTitle(true);
+          setTimeout(() => {setCoolDown(false)},1500)
+        }
+        else
+        {
+          setTimeout(() => {setCoolDown(false)},500)
         }
 
-        
-        setCoolDown(true);
-        setTimeout(() => {setCoolDown(false)},500)
       }
   };
 

@@ -1,11 +1,10 @@
-import scenes from "../scenes.json"
 
-
-function Menu({setIsExploring,setIndexXY,progression})
+function Menu({scenes,setIsExploring,setIndexXY,progression})
 {
     const cells = []
-    
-    for(let y=0;y<scenes[0].length;y++)
+    let numberOfRows = scenes[0] ? scenes[0].length : 0;
+
+    for(let y=0;y<numberOfRows;y++)
     {
         {
             for(let x=0;x<scenes.length;x++)
@@ -24,7 +23,7 @@ function Menu({setIsExploring,setIndexXY,progression})
 
     return (
         <div>
-            <div class="grid gap-2 m-25" style={{"gridTemplateColumns":`repeat(${scenes.length}, minmax(0, 1fr))`}}>
+            <div className="grid gap-2 m-25" style={{"gridTemplateColumns":`repeat(${scenes.length}, minmax(0, 1fr))`}}>
                 {cells}
             </div>
         </div>

@@ -3,8 +3,24 @@ import Explorer from "./pages/Explorer"
 import { useEffect, useState } from 'react';
 import Menu from './components/Menu';
 
+function getScenes(setScenes)
+{
+  fetch(import.meta.env.VITE_SCENES_URL, {method:"GET", headers: {"Accept":"application/json"}}).then((response)=> {
+    response.json().then((json)=>setScenes(json))
+    
+  })
+}
+
+
 function App() 
 {
+  const [scenes,setScenes] = useState([]);
+
+  useEffect(() =>{
+    getScenes(setScenes);
+
+  }, [])
+
   const [isExploring,setIsExploring] = useState(false);
   const [showMenuSection,setShowMenuSection] = useState(true);
   const [isNavigationVertical,setIsNavigationVertical] = useState(true);
@@ -66,7 +82,8 @@ function App()
   }
 
   let returned = isExploring ?
-    <Explorer 
+    <Explorer
+      scenes={scenes} 
       indexX={indexX}
       setIndexX={setIndexX}
       indexY={indexY}
@@ -78,6 +95,7 @@ function App()
       :
       <div className="transition-all duration-500" style={{"opacity":showMenuSection ? "1" : "0"}}>
         <Menu
+        scenes={scenes}
         setIsExploring={setIsExploring}
         setIndexXY={setIndexXY}
         progression={progression}/>
@@ -87,7 +105,7 @@ function App()
                 setIndexXY(...progression[progression.length-1])
               else
                 setIndexXY(0,0)
-              setIsExploring(true)},500)}} class="cursor-pointer text-2xl text-red-400 hover:text-black ring-1 ring-red-400 hover:bg-red-400 focus:bg-red-300 focus:ring-red-300 focus:text-black focus:shadow-lg focus:shadow-red-300/100 focus:outline-none hover:shadow-lg hover:shadow-red-500/50 font-medium rounded-lg px-8 py-5 text-center leading-5 transition-all duration-500">
+              setIsExploring(true)},500)}} className="cursor-pointer text-2xl text-red-400 hover:text-black ring-1 ring-red-400 hover:bg-red-400 focus:bg-red-300 focus:ring-red-300 focus:text-black focus:shadow-lg focus:shadow-red-300/100 focus:outline-none hover:shadow-lg hover:shadow-red-500/50 font-medium rounded-lg px-8 py-5 text-center leading-5 transition-all duration-500">
             Zou !
           </div>  
         </div>
