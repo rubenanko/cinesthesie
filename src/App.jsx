@@ -106,7 +106,7 @@ function App()
               else
                 setIndexXY(0,0)
               setIsExploring(true)},500)}} className="cursor-pointer text-2xl text-red-400 hover:text-black ring-1 ring-red-400 hover:bg-red-400 focus:bg-red-300 focus:ring-red-300 focus:text-black focus:shadow-lg focus:shadow-red-300/100 focus:outline-none hover:shadow-lg hover:shadow-red-500/50 font-medium rounded-lg px-8 py-5 text-center leading-5 transition-all duration-500">
-            Zou !
+            {import.meta.env.VITE_BUTTON_TEXT}
           </div>  
         </div>
       </div>
