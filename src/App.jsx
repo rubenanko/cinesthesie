@@ -2,6 +2,7 @@ import './App.css';
 import Explorer from "./pages/Explorer"
 import { useEffect, useState } from 'react';
 import Menu from './components/Menu';
+import FormatedText from './components/FormatedText';
 
 function getScenes(setScenes)
 {
@@ -81,6 +82,11 @@ function App()
     }
   }
 
+  const welcomeText = import.meta.env.VITE_WELCOME_TEXT ?
+    <p className="text-2xl text-red-400 font-medium px-8 py-1 mt-5 text-justify leading-10">
+      <FormatedText text={import.meta.env.VITE_WELCOME_TEXT}/>
+    </p> : <></>
+
   let returned = isExploring ?
     <Explorer
       scenes={scenes} 
@@ -99,16 +105,31 @@ function App()
         setIsExploring={setIsExploring}
         setIndexXY={setIndexXY}
         progression={progression}/>
-        <div className="m-25">
+
+        {welcomeText}
+
+        <div className="m-25 justify-center flex">
           <div onClick={()=>{setShowMenuSection(false);setTimeout(()=>{
               if(progression.length)
                 setIndexXY(...progression[progression.length-1])
               else
                 setIndexXY(0,0)
-              setIsExploring(true)},500)}} className="cursor-pointer text-2xl text-red-400 hover:text-black ring-1 ring-red-400 hover:bg-red-400 focus:bg-red-300 focus:ring-red-300 focus:text-black focus:shadow-lg focus:shadow-red-300/100 focus:outline-none hover:shadow-lg hover:shadow-red-500/50 font-medium rounded-lg px-8 py-5 text-center leading-5 transition-all duration-500">
+              setIsExploring(true)},500)}} className="cursor-pointer text-2xl text-red-400 hover:text-black ring-1 ring-red-400 hover:bg-red-400 focus:bg-red-300 focus:ring-red-300 focus:text-black focus:shadow-lg focus:shadow-red-300/100 focus:outline-none hover:shadow-lg hover:shadow-red-500/50 font-medium rounded-lg px-8 py-5 text-center leading-5 transition-all duration-500 max-w-fit">
             {import.meta.env.VITE_BUTTON_TEXT}
           </div>  
         </div>
+        <footer className="fixed left-0 bottom-0 flex gap-10 flex-row-reverse w-full text-md text-red-400 font-medium px-8 py-5">
+            <div>
+              <p>
+                {import.meta.env.VITE_CONTACT_INSTAGRAM}
+              </p>
+            </div>
+            <div>
+              <p>
+                {import.meta.env.VITE_CONTACT_EMAIL}
+              </p>
+            </div>
+        </footer>
       </div>
 
 
