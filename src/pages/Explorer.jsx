@@ -107,23 +107,23 @@ function Explorer({scenes,indexX,setIndexX,indexY,setIndexY,changeNavigationDire
   if(sceneState == STATE.VIDEO)
     if(changeNavigationDirection)
       if(isNavigationVertical)
-        navigationBarStyle = 'absolute z-10 right-[50px] bottom-[50px] text-red-500 opacity-255 transition-all duration-300'
+        navigationBarStyle = 'absolute z-10 right-[50px] bottom-[50px] opacity-255 transition-all duration-300'
       else
-        navigationBarStyle = 'rotate-90 absolute z-10 right-[50px] bottom-[50px] text-red-500 opacity-255 transition-all duration-300'      
+        navigationBarStyle = 'rotate-90 absolute z-10 right-[50px] bottom-[50px] opacity-255 transition-all duration-300'      
     else
       if(isNavigationVertical)
-        navigationBarStyle = 'absolute z-10 right-[50px] bottom-[50px] text-red-500 opacity-0 hover:opacity-255 transition-all duration-300'
+        navigationBarStyle = 'absolute z-10 right-[50px] bottom-[50px] opacity-0 hover:opacity-255 transition-all duration-300'
       else
-        navigationBarStyle = 'rotate-90 absolute z-10 right-[50px] bottom-[50px] text-red-500 opacity-0 hover:opacity-255 transition-all duration-300'
+        navigationBarStyle = 'rotate-90 absolute z-10 right-[50px] bottom-[50px] opacity-0 hover:opacity-255 transition-all duration-300'
   else
-    navigationBarStyle = 'hidden absolute z-10 right-[50px] bottom-[50px] text-red-500 opacity-0 hover:opacity-255 transition-all duration-300'
+    navigationBarStyle = 'hidden absolute z-10 right-[50px] bottom-[50px] opacity-0 hover:opacity-255 transition-all duration-300'
 
 
     
 
   return (
     <div onWheel={() => {handleScroll(event);}}>
-      <div className={navigationBarStyle} onClick={handleNavigationBarClick}>
+      <div className={navigationBarStyle} style={{color:`#${scenes[indexX][indexY].textColor}`}} onClick={handleNavigationBarClick}>
         <svg width="150px" height="150px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 22.981l4.12-11.49L12 1.149 7.88 11.49zM9.125 12h5.75L12 20.019z"/><path fill="none" d="M0 0h24v24H0z"/></svg>
       </div>
       <Player src={scenes[indexX][indexY].video}
