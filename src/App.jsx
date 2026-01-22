@@ -37,9 +37,9 @@ function App()
 
   const setIndexX = (index) => {
     _setIndexX(index)
-    if(!progression.includes(scenes[x][indexY].id))
+    if(!progression.includes(scenes[index][indexY].id))
       {
-      let newProgression = [...progression,scenes[x][indexY].id]
+      let newProgression = [...progression,scenes[index][indexY].id]
       setProgression(newProgression)
       window.localStorage.setItem("progression",btoa(JSON.stringify(newProgression)))
     }
