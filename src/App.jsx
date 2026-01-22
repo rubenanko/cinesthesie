@@ -35,36 +35,61 @@ function App()
                                           atob(window.localStorage.getItem("progression"))
                                         ) : []);
 
+  const [lastSeen,setLastSeen] = useState(
+                                        window.localStorage.getItem("last_seen") ? 
+                                        JSON.parse(
+                                          atob(window.localStorage.getItem("last_seen"))
+                                        ) : []);
+
   const setIndexX = (index) => {
     _setIndexX(index)
+
+    // update progression if needed
     if(!progression.includes(scenes[index][indexY].id))
-      {
+    {
       let newProgression = [...progression,scenes[index][indexY].id]
       setProgression(newProgression)
       window.localStorage.setItem("progression",btoa(JSON.stringify(newProgression)))
     }
+
+    // update last seen video if needed
+    let newLastSeen = [index,indexY];
+    setLastSeen(newLastSeen);
+    window.localStorage.setItem("last_seen",btoa(JSON.stringify(newLastSeen)))
   }
 
   
   const setIndexY = (index) => {
     _setIndexY(index)
+    // update progression if needed
     if(!progression.includes(scenes[indexX][index].id))
     {
       let newProgression = [...progression,scenes[indexX][index].id]
       setProgression(newProgression)
       window.localStorage.setItem("progression",btoa(JSON.stringify(newProgression)))
     }
+
+    // update last seen video if needed
+    let newLastSeen = [indexX,index];
+    setLastSeen(newLastSeen);
+    window.localStorage.setItem("last_seen",btoa(JSON.stringify(newLastSeen)))
   }
 
   const setIndexXY = (x,y) => {
       _setIndexX(x)
       _setIndexY(y)
+      // update progression if needed
       if(!progression.includes(scenes[x][y].id))
       {
         let newProgression = [...progression,scenes[x][y].id]
         setProgression(newProgression)
         window.localStorage.setItem("progression",btoa(JSON.stringify(newProgression)))
       }
+
+    // update last seen video if needed
+    let newLastSeen = [x,y];
+    setLastSeen(newLastSeen);
+    window.localStorage.setItem("last_seen",btoa(JSON.stringify(newLastSeen)))
   }
 
   const handleKeyDown = (event) => {
@@ -111,13 +136,12 @@ function App()
 
         <div className="m-25 justify-center flex">
           <div onClick={()=>{setShowMenuSection(false);setTimeout(()=>{
-              if(progression.length)
-                setIndexXY(0,0)
-                // setIndexXY(...progression[progression.length-1])
+              if(lastSeen.length)
+                setIndexXY(lastSeen[0],lastSeen[1])
               else
               {
-                let firstX = Math.ceil(scenes.length/2)
-                setIndexXY(firstX,Math.ceil(scenes[firstX].length/2))
+                let firstX = Math.floor((scenes.length-1)/2)
+                setIndexXY(firstX,Math.floor((scenes[firstX].length-1)/2))
               }
               setIsExploring(true)},500)}} className="cursor-pointer text-2xl text-red-400 hover:text-black ring-1 ring-red-400 hover:bg-red-400 focus:bg-red-300 focus:ring-red-300 focus:text-black focus:shadow-lg focus:shadow-red-300/100 focus:outline-none hover:shadow-lg hover:shadow-red-500/50 font-medium rounded-lg px-8 py-5 text-center leading-5 transition-all duration-500 max-w-fit">
             {import.meta.env.VITE_BUTTON_TEXT}
