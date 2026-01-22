@@ -8,15 +8,15 @@ function Menu({scenes,setIsExploring,setIndexXY,progression})
     {
         {
             for(let x=0;x<scenes.length;x++)
-                if(progression.filter(element=>{return (element[0]==x) && (element[1]==y)}).length)
+                if(progression.includes(scenes[x][y].id))
                     cells.push(
                         <div>
-                                <img onClick={()=>{setIsExploring(true);setIndexXY(x,y)}} className="h-25 w-25 object-cover rounded-sm transition-all duration-2000 hover:scale-105 hover:cursor-pointer" src={scenes[x][y].thumbnail} alt=""/>
+                                <img onClick={()=>{setIsExploring(true);setIndexXY(x,y)}} className="h-screen w-screen max-w-25 max-h-25 object-cover rounded-sm transition-all duration-2000 hover:scale-105 hover:cursor-pointer" src={scenes[x][y].thumbnail} alt=""/>
                         </div>)
                 else                     
                     cells.push(
                         <div>
-                            <div className="h-25 w-25 bg-transparent rounded-sm"/>
+                            <div className="h-screen w-screen max-w-25 max-h-25 bg-neutral-900 rounded-sm"/>
                         </div>)
         }
     }              

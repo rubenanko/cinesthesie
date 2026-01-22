@@ -3,6 +3,7 @@ import Explorer from "./pages/Explorer"
 import { useEffect, useState } from 'react';
 import Menu from './components/Menu';
 import FormatedText from './components/FormatedText';
+import InfoText from './components/InfoText';
 
 function getScenes(setScenes)
 {
@@ -36,9 +37,9 @@ function App()
 
   const setIndexX = (index) => {
     _setIndexX(index)
-    if(!progression.filter(element=>{return (element[0] == index) && (element[1] == indexY)}).length)
+    if(!progression.includes(scenes[x][indexY].id))
       {
-      let newProgression = [...progression,[index,indexY]]
+      let newProgression = [...progression,scenes[x][indexY].id]
       setProgression(newProgression)
       window.localStorage.setItem("progression",btoa(JSON.stringify(newProgression)))
     }
@@ -47,9 +48,9 @@ function App()
   
   const setIndexY = (index) => {
     _setIndexY(index)
-    if(!progression.filter(element=>{return (element[0] == indexX) && (element[1] == index)}).length)
+    if(!progression.includes(scenes[indexX][index].id))
     {
-      let newProgression = [...progression,[indexX,index]]
+      let newProgression = [...progression,scenes[indexX][index].id]
       setProgression(newProgression)
       window.localStorage.setItem("progression",btoa(JSON.stringify(newProgression)))
     }
@@ -58,9 +59,9 @@ function App()
   const setIndexXY = (x,y) => {
       _setIndexX(x)
       _setIndexY(y)
-      if(!progression.filter(element=>{return (element[0] == x) && (element[1] == y)}).length)
+      if(!progression.includes(scenes[x][y].id))
       {
-        let newProgression = [...progression,[x,y]]
+        let newProgression = [...progression,scenes[x][y].id]
         setProgression(newProgression)
         window.localStorage.setItem("progression",btoa(JSON.stringify(newProgression)))
       }
@@ -83,7 +84,7 @@ function App()
   }
 
   const welcomeText = import.meta.env.VITE_WELCOME_TEXT ?
-    <p className="text-2xl text-red-400 font-medium px-8 py-1 mt-5 text-justify leading-10">
+    <p style={{color:import.meta.env.VITE_WELCOME_TEXT_COLOR}} className="text-2xl font-medium px-8 py-1 mt-5 text-justify leading-10">
       <FormatedText text={import.meta.env.VITE_WELCOME_TEXT}/>
     </p> : <></>
 
@@ -111,24 +112,20 @@ function App()
         <div className="m-25 justify-center flex">
           <div onClick={()=>{setShowMenuSection(false);setTimeout(()=>{
               if(progression.length)
-                setIndexXY(...progression[progression.length-1])
-              else
                 setIndexXY(0,0)
+                // setIndexXY(...progression[progression.length-1])
+              else
+              {
+                let firstX = Math.ceil(scenes.length/2)
+                setIndexXY(firstX,Math.ceil(scenes[firstX].length/2))
+              }
               setIsExploring(true)},500)}} className="cursor-pointer text-2xl text-red-400 hover:text-black ring-1 ring-red-400 hover:bg-red-400 focus:bg-red-300 focus:ring-red-300 focus:text-black focus:shadow-lg focus:shadow-red-300/100 focus:outline-none hover:shadow-lg hover:shadow-red-500/50 font-medium rounded-lg px-8 py-5 text-center leading-5 transition-all duration-500 max-w-fit">
             {import.meta.env.VITE_BUTTON_TEXT}
           </div>  
         </div>
-        <footer className="fixed left-0 bottom-0 flex gap-10 flex-row-reverse w-full text-md text-red-400 font-medium px-8 py-5">
-            <div>
-              <p>
-                {import.meta.env.VITE_CONTACT_INSTAGRAM}
-              </p>
-            </div>
-            <div>
-              <p>
-                {import.meta.env.VITE_CONTACT_EMAIL}
-              </p>
-            </div>
+        <footer style={{color:import.meta.env.VITE_FOOTER_COLOR}} className="fixed left-0 bottom-0 flex gap-10 flex-row-reverse w-full text-md font-medium px-8 py-5">
+            <InfoText text={import.meta.env.VITE_CONTACT_EMAIL} />
+            <InfoText text={import.meta.env.VITE_CONTACT_INSTAGRAM} icon="/assets/instagram.svg"/>
         </footer>
       </div>
 
@@ -136,7 +133,6 @@ function App()
     return (
       <div onKeyDown={()=>handleKeyDown(event)} tabIndex="0" className='focus:outline-none'>
         {returned}
-
         </div>
     )
 }
