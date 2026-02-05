@@ -55,12 +55,21 @@ function Explorer({scenes,indexX,setIndexX,indexY,setIndexY,changeNavigationDire
         {
           // timeout de la barre verticale
           setTimeout(() => {
-            let newIndex = index+Math.sign(event.deltaY);
+            let newIndex = index;
             let length = isNavigationVertical ? scenes[indexX].length : scenes.length
-            if(newIndex >= length)
-              newIndex = 0;
-            if(newIndex < 0)
-              newIndex = scenes[0].length-1;
+            let wip = true;
+
+            while (wip)
+            {
+              newIndex += Math.sign(event.deltaY);
+              if(newIndex >= length)
+                newIndex = 0;
+              if(newIndex < 0)
+                newIndex = scenes[0].length-1;
+
+              wip = isNavigationVertical ? scenes[indexX][newIndex].wip : scenes[newIndex][indexY].wip
+            }
+
             setIndex(newIndex)
             },1000)
 
