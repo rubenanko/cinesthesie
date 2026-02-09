@@ -16,6 +16,10 @@ function Explorer({scenes,indexX,setIndexX,indexY,setIndexY,changeNavigationDire
     setTimeout(()=>setCoolDown(false),1000)
   }, [])
 
+  const [touchPadX,setTouchPadX] = useState(null);
+  const [touchPadY,setTouchPadY] = useState(null);
+  const [lastTouchPadTimeStamp,setLastTouchPadTimeStamp] = useState(0);
+
   const [directionX,setDirectionX] = useState(1);
   const [directionY,setDirectionY] = useState(1);
   const [showTitle,setShowTitle] = useState(true);
@@ -86,6 +90,27 @@ function Explorer({scenes,indexX,setIndexX,indexY,setIndexY,changeNavigationDire
       }
   };
 
+  const handleTouchMove = (event) => {
+    const newTouchPadTimeStamp = Date.now();
+    const deltaT = newTouchPadTimeStamp - lastTouchPadTimeStamp
+    const deltaX = touchPadX - event.touches[0].clientX
+    const deltaY = touchPadY - event.touches[0].clientY
+    const deltaXYRatio = Math.abs(deltaX / deltaY);
+
+    setIsNavigationVertical(deltaXYRatio < 1)
+
+    if(deltaT < 500 && deltaT > 5)
+    {
+      handleScroll({ 
+        deltaY: deltaXYRatio < 1 ? deltaY : deltaX
+      })
+    }
+    
+    setLastTouchPadTimeStamp(newTouchPadTimeStamp)
+    setTouchPadX(event.touches[0].clientX)
+    setTouchPadY(event.touches[0].clientY)
+  }
+
   // set up the text
   let text = null
   if(sceneState == STATE.BLUR1 || sceneState == STATE.BLUR2)
@@ -131,7 +156,7 @@ function Explorer({scenes,indexX,setIndexX,indexY,setIndexY,changeNavigationDire
     
 
   return (
-    <div onWheel={() => {handleScroll(event);}}>
+    <div onWheel={() => {handleScroll(event);}} onTouchMove={() => handleTouchMove(event)}>
       <div className={navigationBarStyle} style={{color:`#${scenes[indexX][indexY].textColor}`}} onClick={handleNavigationBarClick}>
         <svg width="150px" height="150px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 22.981l4.12-11.49L12 1.149 7.88 11.49zM9.125 12h5.75L12 20.019z"/><path fill="none" d="M0 0h24v24H0z"/></svg>
       </div>
