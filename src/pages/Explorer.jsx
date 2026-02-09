@@ -91,6 +91,7 @@ function Explorer({scenes,indexX,setIndexX,indexY,setIndexY,changeNavigationDire
   };
 
   const handleTouchMove = (event) => {
+    event.stopPropagation()
     const newTouchPadTimeStamp = Date.now();
     const deltaT = newTouchPadTimeStamp - lastTouchPadTimeStamp
     const deltaX = touchPadX - event.touches[0].clientX
@@ -156,7 +157,7 @@ function Explorer({scenes,indexX,setIndexX,indexY,setIndexY,changeNavigationDire
     
 
   return (
-    <div onWheel={() => {handleScroll(event);}} onTouchMove={() => handleTouchMove(event)}>
+    <div onWheel={() => {handleScroll(event);}} onTouchMoveCapture={() => handleTouchMove(event)}>
       <div className={navigationBarStyle} style={{color:`#${scenes[indexX][indexY].textColor}`}} onClick={handleNavigationBarClick}>
         <svg width="150px" height="150px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 22.981l4.12-11.49L12 1.149 7.88 11.49zM9.125 12h5.75L12 20.019z"/><path fill="none" d="M0 0h24v24H0z"/></svg>
       </div>

@@ -35,7 +35,7 @@ function Player({src,blur,volume,text})
     }
 
     return (
-        <div className='absolute w-full h-full top-0 left-0'>
+        <div className='absolute w-full h-full top-0 left-0 overflow-hidden'>
             <div className="absolute cursor-default top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-1000" style={{opacity:textBlur}}>{currentText}</div>
             <div className='absolute top-0 left-0 w-full h-full transition-all duration-1000' style={{backdropFilter:`blur(${blur}px)`}}></div>
             <div onTransitionStart={()=>handleTransitionStart(event)} className='absolute top-0 left-0 w-full h-full bg-black transition-all duration-1000' style={{opacity:blur/100}}></div>

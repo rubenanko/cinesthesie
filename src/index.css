@@ -25,6 +25,16 @@ body {
   scrollbar-width: none;  /* Firefox, Safari 18.2+, Chromium 121+ */
 }
 
+p
+{
+  text-size-adjust: 50%;
+}
+
+h2
+{
+  text-size-adjust: 50%;
+}
+
 body::-webkit-scrollbar { 
     display: none;  /* Older Safari and Chromium */
 }

@@ -50,7 +50,7 @@ function Menu({scenes,setIsExploring,setIndexXY,progression})
     }              
 
     return (
-            <div className="grid gap-2 m-25 max-w-fit place-self-center" style={{"gridTemplateColumns":`repeat(${scenes.length}, minmax(0, 1fr))`}}>
+            <div className="grid gap-2 mx-0 my-25 max-w-fit place-self-center" style={{"gridTemplateColumns":`repeat(${scenes.length}, minmax(0, 1fr))`}}>
                 {cells}
             </div>
     )
