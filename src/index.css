@@ -19,6 +19,7 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
+  overflow-x: hidden;
   /* min-width: 5000px;
   min-height: 5000px; */
   -ms-overflow-style: none;  /* Internet Explorer 10+ */

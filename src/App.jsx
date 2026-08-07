@@ -2,6 +2,8 @@ import './App.css';
 import Explorer from "./pages/Explorer"
 import { useEffect, useState } from 'react';
 import Menu from './components/Menu';
+import Hero from './components/Hero';
+import Tutorial from './components/Tutorial';
 import FormatedText from './components/FormatedText';
 import InfoText from './components/InfoText';
 
@@ -109,7 +111,7 @@ function App()
   }
 
   const welcomeText = import.meta.env.VITE_WELCOME_TEXT ?
-    <p style={{color:import.meta.env.VITE_WELCOME_TEXT_COLOR}} className="text-2xl font-medium px-8 py-1 mt-5 text-justify leading-10">
+    <p style={{color:import.meta.env.VITE_WELCOME_TEXT_COLOR}} className="welcome-feedback">
       <FormatedText text={import.meta.env.VITE_WELCOME_TEXT}/>
     </p> : <></>
 
@@ -123,31 +125,59 @@ function App()
       changeNavigationDirection={changeNavigationDirection}
       setChangeNavigationDirection={setChangeNavigationDirection}
       isNavigationVertical={isNavigationVertical}
-      setIsNavigationVertical={setIsNavigationVertical}/>
+      setIsNavigationVertical={setIsNavigationVertical}
+      onExit={() => {setIsExploring(false); setShowMenuSection(true)}}/>
       :
-      <div className="transition-all duration-500" style={{"opacity":showMenuSection ? "1" : "0"}}>
-        <Menu
-        scenes={scenes}
-        setIsExploring={setIsExploring}
-        setIndexXY={setIndexXY}
-        progression={progression}/>
+      <div className="welcome-stage transition-all duration-500" style={{"opacity":showMenuSection ? "1" : "0"}}>
+        <div className="welcome-bg" />
+        <div className="welcome-orb orb-1" />
+        <div className="welcome-orb orb-2" />
+        <div className="welcome-orb orb-3" />
+        <div className="welcome-grain" />
 
-        {welcomeText}
+        <div className="welcome-content">
+          <Hero />
 
-        <div className="m-25 justify-center flex">
-          <div onClick={()=>{setShowMenuSection(false);setTimeout(()=>{
-              if(lastSeen.length)
-                setIndexXY(lastSeen[0],lastSeen[1])
-              else
-              {
-                let firstX = Math.floor((scenes.length-1)/2)
-                setIndexXY(firstX,Math.floor((scenes[firstX].length-1)/2))
-              }
-              setIsExploring(true)},500)}} className="cursor-pointer text-2xl text-red-400 hover:text-black ring-1 ring-red-400 hover:bg-red-400 focus:bg-red-300 focus:ring-red-300 focus:text-black focus:shadow-lg focus:shadow-red-300/100 focus:outline-none hover:shadow-lg hover:shadow-red-500/50 font-medium rounded-lg px-8 py-5 text-center leading-5 transition-all duration-500 max-w-fit">
-            {import.meta.env.VITE_BUTTON_TEXT}
-          </div>  
+          <section className="map-section">
+            <p className="map-label">la carte des films</p>
+            <Menu
+              scenes={scenes}
+              setIsExploring={setIsExploring}
+              setIndexXY={setIndexXY}
+              progression={progression}/>
+          </section>
+
+          {welcomeText}
+
+          <div className="cta-wrap">
+            <div onClick={()=>{setShowMenuSection(false);setTimeout(()=>{
+                if(lastSeen.length)
+                  setIndexXY(lastSeen[0],lastSeen[1])
+                else
+                {
+                  let firstX = Math.floor((scenes.length-1)/2)
+                  setIndexXY(firstX,Math.floor((scenes[firstX].length-1)/2))
+                }
+                setIsExploring(true)},500)}} className="cta">
+              <span>{import.meta.env.VITE_BUTTON_TEXT}</span>
+            </div>
+          </div>
+
+          <div className="scroll-guide-wrap">
+            <button className="scroll-guide" onClick={()=>{
+                document.getElementById('tutorial').scrollIntoView({behavior:'smooth',block:'start'})
+              }}>
+              <span className="scroll-guide-label">le guide</span>
+              <svg className="scroll-guide-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 5v14M6 13l6 6 6-6"/>
+              </svg>
+            </button>
+          </div>
+
+          <Tutorial />
         </div>
-        <footer style={{color:import.meta.env.VITE_FOOTER_COLOR}} className="fixed left-0 bottom-0 flex gap-10 flex-row-reverse w-full text-md font-medium px-8 py-5">
+
+        <footer style={{color:import.meta.env.VITE_FOOTER_COLOR}} className="welcome-footer fixed left-0 bottom-0 flex gap-10 flex-row-reverse w-full text-md font-medium px-8 py-5">
             <InfoText text={import.meta.env.VITE_CONTACT_EMAIL} />
             <InfoText text={import.meta.env.VITE_CONTACT_INSTAGRAM} icon="/assets/instagram.svg"/>
         </footer>

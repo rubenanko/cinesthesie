@@ -2,7 +2,7 @@ import Player from '../components/Player';
 import { useState,useEffect } from 'react';
 import FormatedText from '../components/FormatedText';
 
-function Explorer({scenes,indexX,setIndexX,indexY,setIndexY,changeNavigationDirection,isNavigationVertical,setIsNavigationVertical}) 
+function Explorer({scenes,indexX,setIndexX,indexY,setIndexY,changeNavigationDirection,isNavigationVertical,setIsNavigationVertical,onExit}) 
 {
   const blurValue = 50;
   const STATE = {BLUR1:0,VIDEO:1,BLUR2:2,TRANSITION:3};
@@ -30,6 +30,7 @@ function Explorer({scenes,indexX,setIndexX,indexY,setIndexY,changeNavigationDire
 
   // callback function on scroll
   const handleScroll = (event) => {
+    event.preventDefault();
     if(!coolDown)
       if(event.deltaY != 0)
       {
@@ -91,6 +92,7 @@ function Explorer({scenes,indexX,setIndexX,indexY,setIndexY,changeNavigationDire
   };
 
   const handleTouchMove = (event) => {
+    event.preventDefault();
     event.stopPropagation()
     const newTouchPadTimeStamp = Date.now();
     const deltaT = newTouchPadTimeStamp - lastTouchPadTimeStamp
@@ -117,12 +119,12 @@ function Explorer({scenes,indexX,setIndexX,indexY,setIndexY,changeNavigationDire
   if(sceneState == STATE.BLUR1 || sceneState == STATE.BLUR2)
     if(showTitle)
       text = <>
-                <h2 className="text-9xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}><FormatedText text={scenes[indexX][indexY].title}/></h2>
-                <p className="text-5xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}><FormatedText text={scenes[indexX][indexY].Director}/></p>
-                <p className="text-3xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}>{scenes[indexX][indexY].Year}</p>
+                <h2 className="explore-title text-9xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}><FormatedText text={scenes[indexX][indexY].title}/></h2>
+                <p className="explore-director text-5xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}><FormatedText text={scenes[indexX][indexY].Director}/></p>
+                <p className="explore-year text-3xl" style={{color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}>{scenes[indexX][indexY].Year}</p>
             </>
     else
-        text = <p className="text-5xl text-justify" style={{lineHeight: "1.4em",color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}><FormatedText text={scenes[indexX][indexY].preambule}/></p>
+        text = <p className="explore-preambule text-5xl text-justify" style={{lineHeight: "1.4em",color:`#${scenes[indexX][indexY].textColor}`,fontFamily: scenes[indexX][indexY].font}}><FormatedText text={scenes[indexX][indexY].preambule}/></p>
   
     
     // handle blur
@@ -142,24 +144,29 @@ function Explorer({scenes,indexX,setIndexX,indexY,setIndexY,changeNavigationDire
   if(sceneState == STATE.VIDEO)
     if(changeNavigationDirection)
       if(isNavigationVertical)
-        navigationBarStyle = 'absolute z-10 right-[50px] bottom-[50px] opacity-255 transition-all duration-300'
+        navigationBarStyle = 'explore-compass absolute z-10 right-[50px] bottom-[50px] opacity-255 transition-all duration-300'
       else
-        navigationBarStyle = 'rotate-90 absolute z-10 right-[50px] bottom-[50px] opacity-255 transition-all duration-300'      
+        navigationBarStyle = 'explore-compass rotate-90 absolute z-10 right-[50px] bottom-[50px] opacity-255 transition-all duration-300'      
     else
       if(isNavigationVertical)
-        navigationBarStyle = 'absolute z-10 right-[50px] bottom-[50px] opacity-0 hover:opacity-255 transition-all duration-300'
+        navigationBarStyle = 'explore-compass absolute z-10 right-[50px] bottom-[50px] opacity-0 hover:opacity-255 transition-all duration-300'
       else
-        navigationBarStyle = 'rotate-90 absolute z-10 right-[50px] bottom-[50px] opacity-0 hover:opacity-255 transition-all duration-300'
+        navigationBarStyle = 'explore-compass rotate-90 absolute z-10 right-[50px] bottom-[50px] opacity-0 hover:opacity-255 transition-all duration-300'
   else
-    navigationBarStyle = 'hidden absolute z-10 right-[50px] bottom-[50px] opacity-0 hover:opacity-255 transition-all duration-300'
+    navigationBarStyle = 'explore-compass hidden absolute z-10 right-[50px] bottom-[50px] opacity-0 hover:opacity-255 transition-all duration-300'
 
 
     
 
   return (
-    <div onWheel={() => {handleScroll(event);}} onTouchMoveCapture={() => handleTouchMove(event)}>
+    <div onWheel={(e) => {handleScroll(e);}} onTouchMoveCapture={(e) => handleTouchMove(e)} style={{position:'fixed',inset:0,overflow:'hidden',touchAction:'none'}}>
+      <button className="explore-exit" onClick={onExit} aria-label="Quitter l'exploration">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
       <div className={navigationBarStyle} style={{color:`#${scenes[indexX][indexY].textColor}`}} onClick={handleNavigationBarClick}>
-        <svg width="150px" height="150px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 22.981l4.12-11.49L12 1.149 7.88 11.49zM9.125 12h5.75L12 20.019z"/><path fill="none" d="M0 0h24v24H0z"/></svg>
+        <svg className="explore-compass-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 22.981l4.12-11.49L12 1.149 7.88 11.49zM9.125 12h5.75L12 20.019z"/><path fill="none" d="M0 0h24v24H0z"/></svg>
       </div>
       <Player src={scenes[indexX][indexY].video}
               blur={blur}
