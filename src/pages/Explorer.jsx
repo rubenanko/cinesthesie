@@ -24,13 +24,25 @@ function Explorer({scenes,indexX,setIndexX,indexY,setIndexY,changeNavigationDire
   const [directionY,setDirectionY] = useState(1);
   const [showTitle,setShowTitle] = useState(true);
 
+  // enter fullscreen on mobile / touch devices
+  useEffect(() => {
+    const isTouchDevice = window.matchMedia('(hover: none)').matches;
+    const elem = document.documentElement;
+    if(isTouchDevice && elem.requestFullscreen)
+      elem.requestFullscreen().catch(() => {});
+    return () => {
+      if(document.fullscreenElement && document.exitFullscreen)
+        document.exitFullscreen().catch(() => {});
+    };
+  }, []);
+
   const handleNavigationBarClick = () => {
     setIsNavigationVertical(!isNavigationVertical)
   }
 
   // callback function on scroll
   const handleScroll = (event) => {
-    event.preventDefault();
+    if(event && event.preventDefault) event.preventDefault();
     if(!coolDown)
       if(event.deltaY != 0)
       {
@@ -105,7 +117,8 @@ function Explorer({scenes,indexX,setIndexX,indexY,setIndexY,changeNavigationDire
     if(deltaT < 500 && deltaT > 5)
     {
       handleScroll({ 
-        deltaY: deltaXYRatio < 1 ? deltaY : deltaX
+        deltaY: deltaXYRatio < 1 ? deltaY : deltaX,
+        preventDefault: () => {}
       })
     }
     

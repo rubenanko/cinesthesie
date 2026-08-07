@@ -84,14 +84,13 @@ function Tutorial()
                 <h2 className="tutorial-title">Le guide</h2>
                 <span className="rule" />
             </div>
-            <p className="tutorial-sub">six gestes pour arpenter le jardin</p>
+            <p className="tutorial-sub">Six gestes pour arpenter le jardin</p>
             <div className="tutorial-grid">
                 {steps.map((s, i) => (
                     <article className="tutorial-card" key={i}
                              style={{"--i": i, "--rot": `${s.rot}deg`}}>
                         <div className="tutorial-card-head">
                             <span className="tutorial-icon">{s.icon}</span>
-                            <span className="tutorial-step">{s.step}</span>
                         </div>
                         <h3 className="tutorial-card-title">{s.title}</h3>
                         <p className="tutorial-card-text" dangerouslySetInnerHTML={{__html: s.text}} />

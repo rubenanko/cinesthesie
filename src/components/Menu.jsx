@@ -22,7 +22,7 @@ function Menu({scenes,setIsExploring,setIndexXY,progression})
                                     <path d="M9 2h6M12 5V2" />
                                 </svg>
                             </div>
-                            <span className="map-wip-label">bientôt</span>
+                            {/* <span className="map-wip-label">bientôt</span> */}
                         </div>)
                 else
                     if(progression.includes(scenes[x][y].id))

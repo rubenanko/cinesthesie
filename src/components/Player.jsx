@@ -40,10 +40,13 @@ function Player({src,blur,volume,text})
             <div className='absolute top-0 left-0 w-full h-full transition-all duration-1000' style={{backdropFilter:`blur(${blur}px)`}}></div>
             <div onTransitionStart={()=>handleTransitionStart(event)} className='absolute top-0 left-0 w-full h-full bg-black transition-all duration-1000' style={{opacity:blur/100}}></div>
             <ReactPlayer
+                        key={src}
                         src={src}
                         playing={true}
                         controls={false}
                         volume={volume*volumeLowering}
+                        preload="auto"
+                        playsInline={true}
                         style={{
                             width: "100%",
                             height: "100%",

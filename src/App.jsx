@@ -139,7 +139,7 @@ function App()
           <Hero />
 
           <section className="map-section">
-            <p className="map-label">la carte des films</p>
+            {/* <p className="map-label">la carte des films</p> */}
             <Menu
               scenes={scenes}
               setIsExploring={setIsExploring}
@@ -161,17 +161,6 @@ function App()
                 setIsExploring(true)},500)}} className="cta">
               <span>{import.meta.env.VITE_BUTTON_TEXT}</span>
             </div>
-          </div>
-
-          <div className="scroll-guide-wrap">
-            <button className="scroll-guide" onClick={()=>{
-                document.getElementById('tutorial').scrollIntoView({behavior:'smooth',block:'start'})
-              }}>
-              <span className="scroll-guide-label">le guide</span>
-              <svg className="scroll-guide-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 5v14M6 13l6 6 6-6"/>
-              </svg>
-            </button>
           </div>
 
           <Tutorial />
